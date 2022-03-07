@@ -1,6 +1,6 @@
 /* eslint-disable react/no-direct-mutation-state */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-undef */
+/* eslint-disable no-restricted-globals */
+
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -10,6 +10,7 @@ import {
   updateAlphabetToOne,
   updateallAlphabetToOne,
   updateAlphabetToZero,
+  createTask,
 } from "../actions/alphabetsAction";
 import { getAlphabets1 } from "../actions/alphabetsAction";
 
@@ -23,29 +24,42 @@ class DisplayAllAlphabets extends React.Component {
     super(props);
     this.state = {
       alphabet: "",
+      taskName: "",
     };
   }
 
   firstButton = (event) => {
     if (event.target.value === "a") {
       this.props.updateAlphabetToOne(this.state.alphabet);
-      window.location.reload();
+      location.reload(false);
+      
     } else if (event.target.value === "aa") {
       this.props.updateallAlphabetToOne();
-      window.location.reload();
+      location.reload(false);
+    
     } else if (event.target.value === "b") {
       this.props.updateAlphabetToZero(this.state.alphabet);
-      window.location.reload();
+      location.reload(false);
     } else if (event.target.value === "bb") {
       this.props.updateAllAlphabetToZero();
-      window.location.reload();
+      location.reload(false);
     }
+    location.reload(false);
+  };
+
+  addTask = (event) => {
+    event.preventDefault();
+    this.props.createTask(this.state.taskName);
+    location.reload(false);
   };
 
   getAlphaValue = (event) => {
     this.state.alphabet = event.target.value;
   };
 
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   render() {
     const { alphabets } = this.props.alphabets;
     const { alphabets1 } = this.props.alphabets;
@@ -53,6 +67,26 @@ class DisplayAllAlphabets extends React.Component {
     return (
       <div className="alphabets">
         <div className="container">
+          <div className="row">
+            <div className="col">
+              <input
+                type="text"
+                className="form-control"
+                name="taskName"
+                value={this.state.taskName}
+                onChange={this.onChange}
+                id="exampleFormControlInput1"
+                placeholder="enter task"
+              ></input>
+            </div>
+            <div class="col">
+              <button className="btn btn-primary" onClick={this.addTask}>
+              <i className="fa fa-plus" ></i>add Task
+              </button>
+            </div>
+          </div>
+          <br />
+          <br />
           <div className="row">
             <div className="col col-lg-3">
               {alphabets.map((alphabet) => {
@@ -74,12 +108,9 @@ class DisplayAllAlphabets extends React.Component {
             <div className="col col-lg-3">
               <br />
               <br />
-              <br />
-              <br />
-              <br />
               <div className="col-sm">
                 <button
-                  className="btn btn-success"
+                  className="btn btn-secondary"
                   value="a"
                   onClick={this.firstButton}
                 >
@@ -89,7 +120,7 @@ class DisplayAllAlphabets extends React.Component {
                 <br />
                 <br />
                 <button
-                  className="btn btn-success"
+                  className="btn btn-secondary"
                   value="aa"
                   onClick={this.firstButton}
                 >
@@ -99,21 +130,21 @@ class DisplayAllAlphabets extends React.Component {
                 <br />
                 <br />
                 <button
-                  className="btn btn-success"
+                  className="btn btn-secondary"
                   value="b"
                   onClick={this.firstButton}
                 >
-                moveToLeft
+                  moveToLeft
                 </button>
                 <br />
                 <br />
                 <br />
                 <button
-                  className="btn btn-success"
+                  className="btn btn-secondary"
                   value="bb"
                   onClick={this.firstButton}
                 >
-                moveAllToLeft
+                  moveAllToLeft
                 </button>
                 <br />
                 <br />
@@ -149,6 +180,7 @@ DisplayAllAlphabets.propTypes = {
   updateAlphabetToOne: PropTypes.func.isRequired,
   updateAlphabetToZero: PropTypes.func.isRequired,
   updateAllAlphabetToZero: PropTypes.func.isRequired,
+  createTask: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -163,4 +195,5 @@ export default connect(mapStateToProps, {
   updateAlphabetToOne,
   updateAlphabetToZero,
   updateAllAlphabetToZero,
+  createTask,
 })(DisplayAllAlphabets);

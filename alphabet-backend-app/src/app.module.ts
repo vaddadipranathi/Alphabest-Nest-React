@@ -16,7 +16,7 @@ TypeOrmModule.forRoot({
       password: 'Chelli1@',
       database: 'alphabet',
       entities: [Alphabet],
-      synchronize: false,
+      synchronize: true,
     }),
     AlphabetModule
   ],

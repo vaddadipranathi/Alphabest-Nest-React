@@ -14,7 +14,7 @@ class HeaderComponent extends React.Component {
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
                   <Link to="/allAlphabets" className="nav-link">
-                    <b> AlphaBets</b>
+                    <b> Tasks</b>
                   </Link>
                 </li>
               </ul>

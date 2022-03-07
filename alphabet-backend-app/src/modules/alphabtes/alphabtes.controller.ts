@@ -1,8 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Param, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { AlphabetService } from "./alphabtes.service";
+import { Alphabet } from './../../entitys/alphabets.entity';
 
+/**
+ * Starting of AlphabetController 
+ */
 @Controller('aplhabet')
 @ApiTags('aplhabet')
 export class AlphabetController {
@@ -38,5 +42,15 @@ export class AlphabetController {
      @Get('/getAllAlphabestOfZero')
      async getAllAlphabestOfZero() {
           return await this.alphabetService.getAllAlphabestOfZero();
+     }
+
+     @Get('/getTaskById/:alphabet')
+     async getTaskById(@Param('alphabet')alphabet: string) {
+          return await this.alphabetService.getTaskById(alphabet);
+     }
+
+     @Post('/addTask/:alpha')
+     addTasks(@Param('alpha') alpha: string){
+          return this.alphabetService.addTasks(alpha)
      }
 }

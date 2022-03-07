@@ -6,6 +6,7 @@ import {
   UPDATE_TO_ONE,
   UPDATE_ALL_ZERO,
   UPDATE_ALL_ONE,
+  GET_ERRORS
 } from "./types";
 
 export const getAlphabets = () => async (dispatch) => {
@@ -55,3 +56,15 @@ export const updateAllAlphabetToZero = () => async (dispatch) => {
     payload: res.data,
   });
 };
+
+export const createTask = (alpha) => async (dispatch) => {
+  try {
+    await axios.post(`aplhabet/addTask/${alpha}`);
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
+  }
+};
+
